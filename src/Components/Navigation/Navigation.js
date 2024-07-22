@@ -1,15 +1,9 @@
+import React from "react";
 import { NavLink } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { Button } from "react-bootstrap";
-import { Authaction } from "../../Store/auth"; // Adjust import path as needed
+import { useSelector } from "react-redux";
 
 const Navigation = () => {
     const LoginStatus = useSelector((state) => state.auth.LoginStatus);
-    const dispatch = useDispatch();
-
-    const logoutHandler = () => {
-        dispatch(Authaction.Logout());
-    };
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -29,9 +23,9 @@ const Navigation = () => {
                                 </NavLink>
                             </li>
                             <li className="nav-item">
-                                <Button type="button" variant="danger" onClick={logoutHandler} >
-                                    Logout
-                                </Button>
+                                <NavLink to="/Mail" className="nav-link">
+                                    Mailbox
+                                </NavLink>
                             </li>
                         </>
                     )}

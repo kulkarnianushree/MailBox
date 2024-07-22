@@ -1,6 +1,12 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Welcome = () => {
+    const navigate = useNavigate()
+    const ComposeButtonHandler = () =>{
+        navigate('/Mail')
+    }
+
     return (
         <div className="welcome-container">
             <Container className="mt-5">
@@ -12,6 +18,7 @@ const Welcome = () => {
                     </Col>
                 </Row>
             </Container>
+            <Button type="button" onClick={ComposeButtonHandler} variant="primary">Compose Email</Button>
         </div>
     );
 };

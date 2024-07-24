@@ -5,6 +5,7 @@ const Store = configureStore({
     reducer:{
         auth:AuthSlice.reducer,
         mail:MailSlice.reducer
+
     }
 })
 export default Store

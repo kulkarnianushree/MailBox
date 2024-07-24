@@ -1,13 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialMailState = { Message: [] };
+const initialMailState = {
+  Message: [],
+};
 
 const MailSlice = createSlice({
-  name: 'Mail',
+  name: 'mail',
   initialState: initialMailState,
   reducers: {
-    Message(state, action) {
+    setMessage(state, action) {
       state.Message = action.payload;
+    },
+    markAsRead(state, action) {
+      const messageId = action.payload;
+      const message = state.Message.find(msg => msg.id === messageId);
+      if (message) {
+        message.isRead = true;
+      }
     }
   }
 });

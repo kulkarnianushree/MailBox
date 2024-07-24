@@ -1,0 +1,50 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    border-bottom: 1px solid whitesmoke;
+    padding: 0 20px;
+    background-color: #f1f3f4;
+}
+
+.header__left {
+    display: flex;
+    align-items: center;
+}
+
+.header__left img {
+    margin-left: 10px;
+    height: 40px;
+}
+
+.header__middle {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.search_mail {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.search_mail input {
+    border: none;
+    outline: none;
+    padding: 5px;
+    margin-left: 10px;
+    flex: 1;
+}
+
+.search_mail input::placeholder {
+    color: grey;
+}
+
+.search_mail .MuiIconButton-root {
+    padding: 5px;
+}

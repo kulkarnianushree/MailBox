@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Container, Row, Col, Alert } from "react-bootstrap";
-
 const SignUp = ({ toggleAuthMode }) => {
+    
     const [UserDetails, setUserDetails] = useState({
         Email: '',
         Password: '',

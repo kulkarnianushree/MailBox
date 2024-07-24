@@ -1,4 +1,4 @@
-import SenderInbox from "../Components/Inbox/SenderInbox";
+import SenderInbox from "../Components/Inbox/Sent";
 
 const SenderPage = () =>{
     return(

@@ -9,6 +9,7 @@ import SenderPage from "./Pages/SentPage";
 import Root from "./Pages/Root";// Adjust the import path based on your project structure
 import AllmailPage from "./Pages/AllmailPage";
 import InboxPage from "./Pages/InboxPage";
+import BinPage from "./Pages/BinPage";
 
 function App() {
     const LoginStatus = useSelector((state) => state.auth.LoginStatus);
@@ -22,6 +23,7 @@ function App() {
                     {LoginStatus && <Route path="Sent" element={<SenderPage />} />}
                     {LoginStatus && <Route path="All" element={<AllmailPage/>}/>}
                     {LoginStatus && <Route path="Inbox" element={<InboxPage/>}/>}
+                    {LoginStatus && <Route path="Bin" element={<BinPage/>}/>}
                     <Route path="*" element={<AuthPage />} />
                 </Route>
             </Routes>

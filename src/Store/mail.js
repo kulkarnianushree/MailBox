@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialMailState = {
   Message: [],
+  Binlist: []
 };
 
 const MailSlice = createSlice({
@@ -16,6 +17,14 @@ const MailSlice = createSlice({
       const message = state.Message.find(msg => msg.id === messageId);
       if (message) {
         message.isRead = true;
+      }
+    },
+    DeleteMessage(state, action) {
+      const Id = action.payload;
+      const messageToDelete = state.Message.find(msg => msg.id === Id);
+      if (messageToDelete) {
+        state.Message = state.Message.filter(msg => msg.id !== Id);
+        state.Binlist.push(messageToDelete);
       }
     }
   }

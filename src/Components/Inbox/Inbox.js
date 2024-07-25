@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Mailaction } from '../../Store/mail';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton } from '@mui/material';
+import { db } from '../Firebase';
 
 const Inbox = () => {
   const navigate = useNavigate();
@@ -24,6 +26,15 @@ const Inbox = () => {
     setExpandedMessageId(expandedMessageId === id ? null : id);
   };
 
+  const DeleteHandler = async (id) => {
+    try {
+      await db.collection('messages').doc(id).delete();
+      dispatch(Mailaction.DeleteMessage(id));
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  }
+
   return (
     <Container className="mt-5">
       <Button type="button" onClick={backButtonHandler} variant="secondary" className="mb-3">Back</Button>
@@ -39,7 +50,7 @@ const Inbox = () => {
                     <Card.Header as="h5">
                       {!message.isRead && (
                         <IconButton>
-                          <FiberManualRecordIcon style={{color:'blue'}}></FiberManualRecordIcon>
+                          <FiberManualRecordIcon style={{ color: 'blue' }}></FiberManualRecordIcon>
                         </IconButton>
                       )}
                       <Button variant="light" onClick={() => toggleMessage(message.id)} style={{ fontWeight: !message.isRead ? 'bold' : 'normal' }}>
@@ -55,6 +66,9 @@ const Inbox = () => {
                       </Card.Body>
                     )}
                   </Card>
+                  <IconButton onClick={() => DeleteHandler(message.id)}>
+                    <DeleteIcon />
+                  </IconButton>
                 </ListGroup.Item>
               ))}
             </ListGroup>

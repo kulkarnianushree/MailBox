@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Card, ListGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../Firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { Mailaction } from '../../Store/mail';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { db } from '../Firebase'; // Ensure correct path to your Firebase config
+
 const Allmail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -47,6 +49,15 @@ const Allmail = () => {
     fetchEmails();
   }, [dispatch]);
 
+  const DeleteButtonHandler = async (id) => {
+    try {
+      await db.collection('email').doc(id).delete();
+      dispatch(Mailaction.DeleteMessage(id));
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  }
+
   return (
     <Container className="mt-5">
       <Button type="button" onClick={BackButtonHandler} variant="secondary" className="mb-3">Back</Button>
@@ -75,6 +86,9 @@ const Allmail = () => {
                       </Card.Text>
                     </Card.Body>
                   )}
+                  <IconButton onClick={() => DeleteButtonHandler(message.id)}>
+                    <DeleteIcon />
+                  </IconButton>
                 </Card>
               </ListGroup.Item>
             ))}

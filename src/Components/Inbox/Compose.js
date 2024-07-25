@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Container, Row, Col, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { db } from "../Firebase";
-import firebase from "firebase/compat/app";
+
 import { useSelector } from "react-redux";
 
 const Mail = () => {
@@ -45,7 +45,7 @@ const Mail = () => {
           From: From, // Include the user's email
           Subject: UserMessage.Subject,
           Text: UserMessage.Text,
-          Time: firebase.firestore.FieldValue.serverTimestamp()
+          
         });
         setUserMessage({
           To: '',

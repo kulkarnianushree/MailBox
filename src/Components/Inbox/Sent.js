@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Button, Card, ListGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Mailaction } from '../../Store/mail';
+import { db } from '../Firebase'; // Ensure correct path to your Firebase config
 
 const SenderInbox = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [expandedMessageId, setExpandedMessageId] = useState(null);
-  
+
   const emails = useSelector(state => state.mail.Message);
   const sender = useSelector(state => state.auth.user);
-  
+
   const sentMessages = emails.filter(email => email.data.From === sender);
 
   const handleBackButtonClick = () => {
@@ -20,14 +25,26 @@ const SenderInbox = () => {
     setExpandedMessageId(expandedMessageId === id ? null : id);
   };
 
-  const StartButtonHandler = () =>{
-    navigate('/Compose')
+  const StartButtonHandler = () => {
+    navigate('/Compose');
+  };
+
+  if (sentMessages.length === 0) {
+    return (
+      <Button type='button' variant='primary' onClick={StartButtonHandler}>
+        Start Conversation
+      </Button>
+    );
   }
 
-
-  if(sentMessages.length === 0){
-    <Button type='button' variant='primary' onClick={StartButtonHandler}>Start Conversation</Button>
-  }
+  const DeleteHandlerButton = async (id) => {
+    try {
+      await db.collection('email').doc(id).delete();
+      dispatch(Mailaction.DeleteMessage(id));
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  };
 
   return (
     <Container className="mt-5">
@@ -47,7 +64,7 @@ const SenderInbox = () => {
                 <Card>
                   <Card.Header as="h5">
                     <Button variant="light" onClick={() => toggleMessage(message.id)}>
-                        to: {message.data.To}
+                      to: {message.data.To}
                     </Button>
                   </Card.Header>
                   {expandedMessageId === message.id && (
@@ -57,6 +74,9 @@ const SenderInbox = () => {
                     </Card.Body>
                   )}
                 </Card>
+                <IconButton onClick={() => DeleteHandlerButton(message.id)}>
+                  <DeleteIcon />
+                </IconButton>
               </ListGroup.Item>
             ))}
           </ListGroup>

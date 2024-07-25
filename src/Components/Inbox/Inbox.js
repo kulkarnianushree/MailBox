@@ -3,6 +3,8 @@ import { Container, Row, Col, Button, Card, ListGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Mailaction } from '../../Store/mail';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { IconButton } from '@mui/material';
 
 const Inbox = () => {
   const navigate = useNavigate();
@@ -35,7 +37,11 @@ const Inbox = () => {
                 <ListGroup.Item key={message.id} className="mb-3">
                   <Card>
                     <Card.Header as="h5">
-                      {!message.isRead && <span style={{ color: 'blue', marginRight: '8px' }}>•</span>}
+                      {!message.isRead && (
+                        <IconButton>
+                          <FiberManualRecordIcon style={{color:'blue'}}></FiberManualRecordIcon>
+                        </IconButton>
+                      )}
                       <Button variant="light" onClick={() => toggleMessage(message.id)} style={{ fontWeight: !message.isRead ? 'bold' : 'normal' }}>
                         from: {message.data.From}
                       </Button>

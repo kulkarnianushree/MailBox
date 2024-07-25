@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { db } from '../Firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { Mailaction } from '../../Store/mail';
-
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { IconButton } from '@mui/material';
 const Allmail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -56,7 +57,11 @@ const Allmail = () => {
               <ListGroup.Item key={message.id} className="mb-3">
                 <Card>
                   <Card.Header as="h5">
-                    {!message.isRead && <span style={{ color: 'blue', marginRight: '8px' }}>•</span>}
+                    {!message.isRead && (
+                      <IconButton>
+                        <FiberManualRecordIcon style={{color:'blue'}}></FiberManualRecordIcon>
+                      </IconButton>
+                    )}
                     <Button variant="light" onClick={() => toggleMessage(message.id)} style={{ fontWeight: !message.isRead ? 'bold' : 'normal' }}>
                       {message.data.From === Sender ? 'To: ' : 'From: '}
                       {message.data.From === Sender ? message.data.To : message.data.From}
